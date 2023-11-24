@@ -1,7 +1,6 @@
 package lib;
 
 public enum E {
-
     InvalidWebpage("This page is not valid");
 
     private final String message;
@@ -9,7 +8,7 @@ public enum E {
         this.message = message;
     }
 
-    public String getMessage() {
-        return this.message;
-    }
+    public String getMessage(String string) { return this.message + string; }
+
+    public String getMessage() { return this.message; }
 }
