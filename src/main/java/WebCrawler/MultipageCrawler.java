@@ -13,20 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MultipageCrawler {
-    private final WebDriver driver;
-    private final WebDriverWait webDriverWait;
     private final List<Strings> webPages;
-    private final EdgeOptions edgeOptions;
 
     MultipageCrawler() {
-        this.edgeOptions = new EdgeOptions();
-        this.driver = new EdgeDriver(edgeOptions);
         this.webPages = List.of(
                 Strings.PlanetFitnessWebURL,
                 Strings.GoodLifeFitnessWebURL,
                 Strings.MovatiAthleticWebURL
         );
-        webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(20));
     }
 
     private void parseWebDataToText() {
@@ -38,9 +32,8 @@ public class MultipageCrawler {
     }
 
     public List<FitnessDataModel> getAllFitnessModels() {
-        driver.manage().window().maximize();
         List<FitnessDataModel> fitnessDataModel = new ArrayList<>();
-        (new CrawlPlanetFitness(driver, Strings.PlanetFitnessWebURL, webDriverWait)).getFitnessDataModel();
+        System.out.println((new CrawlPlanetFitness(Strings.PlanetFitnessWebURL)).getFitnessDataModel());
         // TODO: uncomment the code block below
 //        for (Strings webPage : webPages) {
 //            switch (webPage) {
