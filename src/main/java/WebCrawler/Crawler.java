@@ -4,9 +4,10 @@ import WebCrawler.Model.FitnessDataModel;
 import helpers.Strings;
 import org.jsoup.nodes.Document;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.edge.EdgeOptions;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import us.codecraft.xsoup.Xsoup;
 
@@ -15,6 +16,7 @@ import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.Duration;
+import java.util.regex.Pattern;
 
 public class Crawler {
     Actions actions;
@@ -26,12 +28,14 @@ public class Crawler {
     FitnessDataModel fitnessDataModel;
     boolean isDirectoryEmpty;
     int numberOfFiles;
+    Pattern pricePattern;
 
     Crawler(Strings url) {
         this.url = url.value;
         this.fitnessDataModel = new FitnessDataModel();
         this.isDirectoryEmpty = true;
         this.numberOfFiles = 0;
+        this.pricePattern = Pattern.compile(Strings.RegexPrice.value);
     }
 
     void createDirectory(Strings htmlFilePath) {
@@ -40,6 +44,10 @@ public class Crawler {
             initDriver();
             try {
                 Files.createDirectory(Paths.get(Strings.SourceParsedHTMLDirectory.value));
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            try {
                 Files.createDirectory(Paths.get(htmlFilePath.value));
             } catch (Exception e) {
                 System.out.println(e.getMessage());
@@ -48,8 +56,14 @@ public class Crawler {
     }
 
     void initDriver() {
-        EdgeOptions edgeOptions = new EdgeOptions();
-        driver = new EdgeDriver(edgeOptions);
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments(Strings.ArgumentRemoteAllowOrigins.value);
+        DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
+        desiredCapabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
+        chromeOptions.merge(desiredCapabilities);
+        driver = new ChromeDriver(chromeOptions);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(100));
         actions = new Actions(driver);
         webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(20));
         driver.manage().window().maximize();
@@ -61,22 +75,26 @@ public class Crawler {
             File[] files = directory.listFiles();
             assert files != null;
             numberOfFiles = files.length;
-            if (files.length == 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return files.length == 0;
         } else {
-            return false;
+            return true;
         }
     }
 
-    void parseAndStoreHTMLFile() {
+    void parseAndStoreHTMLFile(Strings directory) {
         String fileName = this.document.title();
         fileName = fileName.replaceAll(Strings.RegexSpecialCharacters.value, Strings.Empty.value);
+        storeFileUsing(directory, fileName);
+    }
+
+    void parseAndStoreHTMLFile(Strings directory, String fileName) {
+        storeFileUsing(directory, fileName);
+    }
+
+    private void storeFileUsing(Strings directory, String fileName) {
         try {
             FileWriter fileWriter = new FileWriter(
-                    Strings.PlanetFitnessParsedHTMLDirectory.value + fileName + Strings.HTMLExtension.value
+                    directory.value + fileName + Strings.HTMLExtension.value
             );
             fileWriter.write(document.outerHtml());
             fileWriter.close();

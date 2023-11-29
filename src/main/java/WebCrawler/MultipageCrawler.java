@@ -3,12 +3,7 @@ package WebCrawler;
 import WebCrawler.Model.FitnessDataModel;
 import helpers.Strings;
 import org.jsoup.nodes.Document;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.edge.EdgeOptions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +14,7 @@ public class MultipageCrawler {
         this.webPages = List.of(
                 Strings.PlanetFitnessWebURL,
                 Strings.GoodLifeFitnessWebURL,
-                Strings.MovatiAthleticWebURL
+                Strings.Fit4LessWebURL
         );
     }
 
@@ -33,7 +28,8 @@ public class MultipageCrawler {
 
     public List<FitnessDataModel> getAllFitnessModels() {
         List<FitnessDataModel> fitnessDataModel = new ArrayList<>();
-        System.out.println((new CrawlPlanetFitness(Strings.PlanetFitnessWebURL)).getFitnessDataModel());
+//        System.out.println((new CrawlPlanetFitness(Strings.PlanetFitnessWebURL)).getFitnessDataModel());
+        (new CrawlFit4Less(Strings.Fit4LessWebURL)).getFitnessDataModel();
         // TODO: uncomment the code block below
 //        for (Strings webPage : webPages) {
 //            switch (webPage) {

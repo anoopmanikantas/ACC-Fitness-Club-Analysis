@@ -2,11 +2,12 @@ package helpers;
 
 public enum Strings {
     //- General Strings
-//    IgnoreSSLErrors("--ignore-ssl-errors=yes"),
-//    IgnoreCertificateErrors("--ignore-certificate-errors"),
-//    AllowInsecureLocalHosts("--allow-insecure-localhost"),
-//    UseAutomationExtension("useAutomationExtension"),
     Empty,
+    EdgeDriverLocation("src/main/java/msedgedriver.exe"),
+    EdgeDriverString("webdriver.edge.driver"),
+    ArgumentRemoteAllowOrigins("--remote-allow-origins=*"),
+    WebDriverHTTPFactory("webdriver.http.factory"),
+    JDKHTTPClient("jdk-http-client"),
     SourceParsedHTMLDirectory("src/main/java/parsedHTML/"),
     HTMLExtension(".html"),
     JSONExtension(".json"),
@@ -46,10 +47,21 @@ public enum Strings {
     GoodLifeFitnessParsedHTMLDirectory(SourceParsedHTMLDirectory.value + GoodLifeFitness.name() + ForwardSlash.value),
     GoodLifeFitnessWebURL("https://www.planetfitness.ca/"), // TODO: Update URL
 
-    //- Movati Athletic
-    MovatiAthletic(Empty.value),
-    MovatiAthleticParsedHTMLDirectory(SourceParsedHTMLDirectory.value + MovatiAthletic.name() + ForwardSlash.value),
-    MovatiAthleticWebURL("https://www.planetfitness.ca/"); // TODO: Update URL
+    //- Fit4Less
+    Fit4Less(Empty.value),
+    Fit4LessParsedHTMLDirectory(SourceParsedHTMLDirectory.value + Fit4Less.name() + ForwardSlash.value),
+    Fit4LessWebURL("https://www.fit4less.ca/"),
+    Fit4LessCheckedClassName("checked"),
+    Fit4LessProvinceDropdownXpath("/html/body/form/div[7]/div[2]/div[1]/div/div[1]/div[1]"),
+    Fit4LessProvinceOntarioXpath("/html/body/form/div[7]/div[2]/div[1]/div/div[1]/div[1]/ul/li[7]"),
+    Fit4LessCityDropdownXpath("/html/body/form/div[7]/div[2]/div[1]/div/div[1]/div[2]"),
+    Fit4LessCityWindsorXpath("/html/body/form/div[7]/div[2]/div[1]/div/div[1]/div[2]/ul/li[63]"),
+    Fit4LessFindClubsButtonXpath("/html/body/form/div[7]/div[2]/div[1]/div/div[1]/div[3]/a"),
+    Fit4LessMembershipContainerXpath("/html/body/form/div[7]/div[2]/div/div/div/div["),
+    Fit4LessMembershipPriceContainerXpath("]/div[1]/div[1]/div"),
+    Fit4LessAmenitiesContainerXpath("]/div[1]/div[2]/ul/ul"),
+    Fit4LessLocationsContainerXpath("/html/body/form/div[7]/div[1]/div[3]/div[2]/div[1]/div"),
+    Fit4LessLocationsWebPageXpath("/html/body/form/div[6]/header/div[2]/div/div[2]/ul/li[2]");
 
     public final String value;
 
@@ -63,6 +75,7 @@ public enum Strings {
     public String getValueUsing(String string) {
         return this.value + string;
     }
+
     public static String getFormattedXpath(Strings string1, int index, Strings strings2) {
         return String.format("%s%d%s", string1.value, index, strings2.value);
     }

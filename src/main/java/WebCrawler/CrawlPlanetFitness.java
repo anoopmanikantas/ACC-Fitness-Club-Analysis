@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class CrawlPlanetFitness extends Crawler implements CrawlerDelegate {
 
@@ -46,7 +45,7 @@ public class CrawlPlanetFitness extends Crawler implements CrawlerDelegate {
         showAllLocationsButton.click();
         html = driver.getPageSource();
         document = Jsoup.parse(html);
-        parseAndStoreHTMLFile();
+        parseAndStoreHTMLFile(Strings.PlanetFitnessParsedHTMLDirectory);
     }
 
     private void traverseThroughAllTheLocations() {
@@ -81,7 +80,7 @@ public class CrawlPlanetFitness extends Crawler implements CrawlerDelegate {
     private void fetchDataFromLocation() {
         if (isDirectoryEmpty) {
             document = Jsoup.parse(driver.getPageSource());
-            parseAndStoreHTMLFile();
+            parseAndStoreHTMLFile(Strings.PlanetFitnessParsedHTMLDirectory);
         }
         String location = getLocation();
         System.out.println(location);
@@ -126,7 +125,6 @@ public class CrawlPlanetFitness extends Crawler implements CrawlerDelegate {
 
     private List<MembershipDetailsModel> getMembershipDetails() {
         List<MembershipDetailsModel> membershipDetailsModels = new ArrayList<>();
-        Pattern pattern = Pattern.compile(Strings.RegexPrice.value);
         int memberShipContainerCount = Xsoup
                 .compile(
                         Strings.PlanetFitnessMembershipContainerXpath.value
@@ -151,7 +149,7 @@ public class CrawlPlanetFitness extends Crawler implements CrawlerDelegate {
                     ).evaluate(document).getElements().get(0);
             for (Element child: element.children()) {
                 String childText = child.text();
-                Matcher matcher = pattern.matcher(childText);
+                Matcher matcher = pricePattern.matcher(childText);
                 if (matcher.find()) {
                     if (childText.toLowerCase().contains(Strings.Month.name().toLowerCase()) || childText.toLowerCase().contains(Strings.Monthly.name().toLowerCase()))
                         membershipDetailsModel.monthlyFee = childText;
