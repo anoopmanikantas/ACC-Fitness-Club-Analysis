@@ -2,6 +2,7 @@ package WebCrawler;
 
 import WebCrawler.Model.FitnessDataModel;
 import WebCrawler.Model.MembershipDetailsModel;
+import helpers.Log;
 import helpers.Strings;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -34,7 +35,7 @@ public class CrawlPlanetFitness extends Crawler implements CrawlerDelegate {
             try {
                 traverseThroughAllTheFilesLocally();
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                Log.info(e.getMessage());
             }
         }
     }
@@ -71,7 +72,7 @@ public class CrawlPlanetFitness extends Crawler implements CrawlerDelegate {
                 driver.close();
                 driver.switchTo().window(new ArrayList<>(driver.getWindowHandles()).get(0));
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                Log.info(e.getMessage());
                 break;
             }
         }
@@ -83,7 +84,6 @@ public class CrawlPlanetFitness extends Crawler implements CrawlerDelegate {
             parseAndStoreHTMLFile(Strings.PlanetFitnessParsedHTMLDirectory);
         }
         String location = getLocation();
-        System.out.println(location);
         fitnessDataModel.locations.add(location);
         fitnessDataModel.additionalDetails.add(getTextFrom(Strings.PlanetFitnessClubHoursXpath.value));
         fitnessDataModel.gymName = Strings.PlanetFitness.name();

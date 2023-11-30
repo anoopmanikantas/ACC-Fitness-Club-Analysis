@@ -3,6 +3,7 @@ package WebCrawler;
 import WebCrawler.Model.FitnessDataModel;
 import helpers.Strings;
 import org.jsoup.nodes.Document;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -29,6 +30,7 @@ public class Crawler {
     boolean isDirectoryEmpty;
     int numberOfFiles;
     Pattern pricePattern;
+    JavascriptExecutor javascriptExecutor;
 
     Crawler(Strings url) {
         this.url = url.value;
@@ -36,6 +38,7 @@ public class Crawler {
         this.isDirectoryEmpty = true;
         this.numberOfFiles = 0;
         this.pricePattern = Pattern.compile(Strings.RegexPrice.value);
+        this.javascriptExecutor = (JavascriptExecutor) this.driver;
     }
 
     void createDirectory(Strings htmlFilePath) {
@@ -44,14 +47,10 @@ public class Crawler {
             initDriver();
             try {
                 Files.createDirectory(Paths.get(Strings.SourceParsedHTMLDirectory.value));
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
+            } catch (Exception ignored) {}
             try {
                 Files.createDirectory(Paths.get(htmlFilePath.value));
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
+            } catch (Exception ignored) {}
         }
     }
 
@@ -81,6 +80,7 @@ public class Crawler {
         }
     }
 
+    @SuppressWarnings("All")
     void parseAndStoreHTMLFile(Strings directory) {
         String fileName = this.document.title();
         fileName = fileName.replaceAll(Strings.RegexSpecialCharacters.value, Strings.Empty.value);

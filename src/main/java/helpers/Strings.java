@@ -3,18 +3,14 @@ package helpers;
 public enum Strings {
     //- General Strings
     Empty,
-    EdgeDriverLocation("src/main/java/msedgedriver.exe"),
-    EdgeDriverString("webdriver.edge.driver"),
     ArgumentRemoteAllowOrigins("--remote-allow-origins=*"),
-    WebDriverHTTPFactory("webdriver.http.factory"),
-    JDKHTTPClient("jdk-http-client"),
     SourceParsedHTMLDirectory("src/main/java/parsedHTML/"),
     HTMLExtension(".html"),
-    JSONExtension(".json"),
     ForwardSlash("/"),
     ChildrenXpath(".//*"),
     ClosingBox("]"),
     Separator(", "),
+    Windsor,
     Monthly,
     Month,
     Annual,
@@ -23,12 +19,12 @@ public enum Strings {
     //- Regex
     RegexSpecialCharacters("[^a-zA-Z0-9]"),
     RegexPrice("\\$\\d{1,3}(\\.\\d{1,3})?"),
+    RegexPhoneNumber("\\(\\d{3}\\) \\d{3}-\\d{4}"),
 
     //- Planet Fitness
     PlanetFitnessWebURL("https://www.planetfitness.ca/"),
     PlanetFitness(Empty.value),
     PlanetFitnessParsedHTMLDirectory(SourceParsedHTMLDirectory.value + PlanetFitness.name() + ForwardSlash.value),
-    PlanetFitnessParsedHTMLFile(PlanetFitnessParsedHTMLDirectory.value + "PlanetFitnessHome" + HTMLExtension.value),
     PlanetFitnessShowAllLocationsButtonXpath("/html/body/div[3]/div/div/div[2]/div[1]/div/div[3]/div/a"),
     PlanetFitnessLocationsContainerXpath("/html/body/div[2]/div[2]/div[2]/div"),
     PlanetFitnessLocationsContainerFirstXpath("/html/body/div[2]/div[2]/div[2]/div/div["),
@@ -45,7 +41,18 @@ public enum Strings {
     //- Good Life Fitness
     GoodLifeFitness(Empty.value),
     GoodLifeFitnessParsedHTMLDirectory(SourceParsedHTMLDirectory.value + GoodLifeFitness.name() + ForwardSlash.value),
-    GoodLifeFitnessWebURL("https://www.planetfitness.ca/"), // TODO: Update URL
+    GoodLifeFitnessWebURL("https://www.goodlifefitness.com/"),
+    GoodLifeFitnessLocationsHeaderXpath("/html/body/div[1]/div/div[2]/div/div[1]/div/div/div/div/div/div/div/div/div[1]/div/div[2]/div/h1"),
+    GoodLifeFitnessLocationNavigationXpath("/html/body/div[1]/div/div[1]/div/div/div/div/div[1]/header/div/div[1]/div[1]/nav/ul/li[2]/div/a"),
+    GoodLifeFitnessMembershipNavigationXpath("/html/body/div[1]/div/div[1]/div/div/div/div/div[1]/header/div/div[1]/div[1]/nav/ul/li[4]/div/a"),
+    GoodLifeFitnessLocationsListContainerXpath("/html/body/div[1]/div/div[2]/div/div[2]/div/div[3]/div/div[5]/div/div[1]/ul"),
+    GoodLifeFitnessAmenitiesTableRowXpath("/html/body/div[1]/div/div[2]/div/div[3]/div/div/div/div/div/div/div/div[1]/table/tbody/tr[4]"),
+    GoodLifeFitnessPricingTableRowXpath("/html/body/div[1]/div/div[2]/div/div[3]/div/div/div/div/div/div/div/div[1]/table/thead/tr"),
+    GoodLifeFitnessAmenitiesAvailableString("available"),
+    GoodLifeFitnessAmenitiesIsHiddenString("u-is-hidden"),
+    GoodLifeFitnessEssentialPlanString("Essential"),
+    GoodLifeFitnessUltimatePlanString("Ultimate"),
+    GoodLifeFitnessPerformancePlanString("Performance"),
 
     //- Fit4Less
     Fit4Less(Empty.value),
@@ -70,10 +77,6 @@ public enum Strings {
     }
     Strings(String value) {
         this.value = value;
-    }
-
-    public String getValueUsing(String string) {
-        return this.value + string;
     }
 
     public static String getFormattedXpath(Strings string1, int index, Strings strings2) {
