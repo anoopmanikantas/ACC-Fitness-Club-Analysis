@@ -28,6 +28,13 @@ enum Fit4LessCurrentPage {
 }
 
 public class CrawlFit4Less extends Crawler implements CrawlerDelegate {
+    public static void info(String message) {
+        java.util.logging.Logger.getLogger(CrawlFit4Less.class.getName()).info(message);
+    }
+
+    public static void error(String error) {
+        java.util.logging.Logger.getLogger(CrawlFit4Less.class.getName()).severe(error);
+    }
     Fit4LessCurrentPage fit4LessCurrentPage;
 
     CrawlFit4Less(Strings url) {

@@ -19,7 +19,6 @@ public class MultiPageCrawler {
 
     public List<FitnessDataModel> getAllFitnessModels() {
         List<FitnessDataModel> fitnessDataModel = new ArrayList<>();
-        // TODO: uncomment the code block below
         for (Strings webPage : webPages) {
             switch (webPage) {
                 case Strings.GoodLifeFitnessWebURL -> fitnessDataModel.add((new CrawlGoodLifeFitness(webPage)).getFitnessDataModel()) ;

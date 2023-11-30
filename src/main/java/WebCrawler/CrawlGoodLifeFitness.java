@@ -28,6 +28,13 @@ enum GoodLifeFitnessCurrentPage {
 }
 
 public class CrawlGoodLifeFitness extends Crawler implements CrawlerDelegate{
+    public static void info(String message) {
+        java.util.logging.Logger.getLogger(CrawlGoodLifeFitness.class.getName()).info(message);
+    }
+
+    public static void error(String error) {
+        java.util.logging.Logger.getLogger(CrawlGoodLifeFitness.class.getName()).severe(error);
+    }
     GoodLifeFitnessCurrentPage goodLifeFitnessCurrentPage;
 
     CrawlGoodLifeFitness(Strings url) {
@@ -51,6 +58,7 @@ public class CrawlGoodLifeFitness extends Crawler implements CrawlerDelegate{
         goodLifeFitnessCurrentPage = GoodLifeFitnessCurrentPage.MembershipPage;
         driver.findElement(By.xpath(Strings.GoodLifeFitnessMembershipNavigationXpath.value)).click();
         parseAndStoreHTML();
+        driver.quit();
     }
 
     private List<MembershipDetailsModel> getMembershipDetails() {

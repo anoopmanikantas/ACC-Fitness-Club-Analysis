@@ -4,6 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MembershipDetailsModel {
+    public String membershipTier = "";
+    public List<String> amenities = new ArrayList<>();
+    public String monthlyFee = "";
+    public String annualFee = "";
+    public String additionalFeeInfo = "";
+    public String biWeeklyFee = "";
+
     @Override
     public String toString() {
         return "MembershipDetailsModel{" +
@@ -15,12 +22,4 @@ public class MembershipDetailsModel {
                 "\n\tbiWeeklyFee='" + biWeeklyFee + '\'' +
                 '}';
     }
-
-    public String membershipTier = "";
-    public List<String> amenities = new ArrayList<>();
-    public String monthlyFee = "";
-    public String annualFee = "";
-    public String additionalFeeInfo = "";
-    public String biWeeklyFee = "";
-
 }

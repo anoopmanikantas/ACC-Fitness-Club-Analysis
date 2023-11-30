@@ -19,6 +19,13 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 
 public class CrawlPlanetFitness extends Crawler implements CrawlerDelegate {
+    public static void info(String message) {
+        java.util.logging.Logger.getLogger(CrawlPlanetFitness.class.getName()).info(message);
+    }
+
+    public static void error(String error) {
+        java.util.logging.Logger.getLogger(CrawlPlanetFitness.class.getName()).severe(error);
+    }
 
     CrawlPlanetFitness(Strings url) {
         super(url);
@@ -34,9 +41,7 @@ public class CrawlPlanetFitness extends Crawler implements CrawlerDelegate {
         } else {
             try {
                 traverseThroughAllTheFilesLocally();
-            } catch (Exception e) {
-                Log.info(e.getMessage());
-            }
+            } catch (Exception ignored) { }
         }
     }
 
@@ -71,9 +76,11 @@ public class CrawlPlanetFitness extends Crawler implements CrawlerDelegate {
                 fetchDataFromLocation();
                 driver.close();
                 driver.switchTo().window(new ArrayList<>(driver.getWindowHandles()).get(0));
-            } catch (Exception e) {
-                Log.info(e.getMessage());
+            } catch (Exception ignored) {
+                driver.close();
+                driver.quit();
                 break;
+
             }
         }
     }
