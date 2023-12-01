@@ -2,7 +2,6 @@ package WebCrawler;
 
 import WebCrawler.Model.FitnessDataModel;
 import WebCrawler.Model.MembershipDetailsModel;
-import helpers.Log;
 import helpers.Strings;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -159,9 +158,9 @@ public class CrawlPlanetFitness extends Crawler implements CrawlerDelegate {
                 Matcher matcher = pricePattern.matcher(childText);
                 if (matcher.find()) {
                     if (childText.toLowerCase().contains(Strings.Month.name().toLowerCase()) || childText.toLowerCase().contains(Strings.Monthly.name().toLowerCase()))
-                        membershipDetailsModel.monthlyFee = childText;
+                        membershipDetailsModel.monthlyFee = matcher.group();
                     else if (childText.toLowerCase().contains(Strings.Annual.name().toLowerCase()) || childText.toLowerCase().contains(Strings.Yearly.name().toLowerCase()))
-                        membershipDetailsModel.annualFee = childText;
+                        membershipDetailsModel.annualFee = matcher.group();
                     else membershipDetailsModel.additionalFeeInfo = childText;
                 }
             }

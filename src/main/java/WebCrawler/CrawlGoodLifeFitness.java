@@ -35,6 +35,7 @@ public class CrawlGoodLifeFitness extends Crawler implements CrawlerDelegate{
     public static void error(String error) {
         java.util.logging.Logger.getLogger(CrawlGoodLifeFitness.class.getName()).severe(error);
     }
+
     GoodLifeFitnessCurrentPage goodLifeFitnessCurrentPage;
 
     CrawlGoodLifeFitness(Strings url) {
@@ -83,14 +84,15 @@ public class CrawlGoodLifeFitness extends Crawler implements CrawlerDelegate{
             if (!pricingDetails.className().toLowerCase().contains(Strings.GoodLifeFitnessAmenitiesIsHiddenString.value.toLowerCase())) {
                 Matcher matcher = pricePattern.matcher(pricingDetails.text());
                 if (matcher.find()) {
-                    if (pricingDetails.text().toLowerCase().contains(Strings.GoodLifeFitnessUltimatePlanString.value))
+                    if (pricingDetails.text().toLowerCase().contains(Strings.GoodLifeFitnessUltimatePlanString.value.toLowerCase()))
                         prices.put(Strings.GoodLifeFitnessUltimatePlanString, matcher.group());
-                    else if (pricingDetails.text().toLowerCase().contains(Strings.GoodLifeFitnessPerformancePlanString.value))
+                    else if (pricingDetails.text().toLowerCase().contains(Strings.GoodLifeFitnessPerformancePlanString.value.toLowerCase()))
                         prices.put(Strings.GoodLifeFitnessPerformancePlanString, matcher.group());
                     else prices.put(Strings.GoodLifeFitnessEssentialPlanString, matcher.group());
                 }
             }
         }
+        System.out.println(prices);
         return prices;
     }
 

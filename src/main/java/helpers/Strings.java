@@ -18,8 +18,9 @@ public enum Strings {
 
     //- Regex
     RegexSpecialCharacters("[^a-zA-Z0-9]"),
-    RegexPrice("\\$\\d{1,3}(\\.\\d{1,3})?"),
+    RegexPrice("\\$\\s?\\d{1,3}(\\.\\d{1,3})?"),
     RegexPhoneNumber("\\(\\d{3}\\) \\d{3}-\\d{4}"),
+    RegexSpaceAndNonWordCharacters("\\s+|\\W+"),
 
     //- Planet Fitness
     PlanetFitnessWebURL("https://www.planetfitness.ca/"),
