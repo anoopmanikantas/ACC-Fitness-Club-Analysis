@@ -7,8 +7,13 @@ import java.util.*;
 
 public class InvertedIndex {
     private final Map<String, List<FitnessDataModel>> invertedIndex;
-    private final List<FitnessDataModel> fitnessDataModels;
-    private final List<String> tokenizedWords;
+    private List<FitnessDataModel> fitnessDataModels;
+    private List<String> tokenizedWords;
+
+    private void clearData() {
+        invertedIndex.clear();
+        tokenizedWords = new ArrayList<>();
+    }
 
     public InvertedIndex(List<FitnessDataModel> fitnessDataModels) {
         invertedIndex = new HashMap<>();
@@ -17,6 +22,7 @@ public class InvertedIndex {
     }
 
     private void convertModelsToInvertedIndex() {
+        clearData();
         for (FitnessDataModel model : fitnessDataModels) {
             tokenizeStringAndInsertIntoInvertedIndex(model.gymName, model);
             for (String location : model.locations) {
@@ -57,6 +63,7 @@ public class InvertedIndex {
     }
 
     public List<String> getTokenizedWords() {
+        convertModelsToInvertedIndex();
         return tokenizedWords;
     }
 
