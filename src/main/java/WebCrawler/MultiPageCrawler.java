@@ -1,6 +1,9 @@
 package WebCrawler;
 
+import WebCrawler.Fit4Less.CrawlFit4Less;
+import WebCrawler.GoodLifeFitness.CrawlGoodLifeFitness;
 import WebCrawler.Model.FitnessDataModel;
+import WebCrawler.PlanetFitness.CrawlPlanetFitness;
 import helpers.Strings;
 
 import java.util.ArrayList;
@@ -9,7 +12,7 @@ import java.util.List;
 public class MultiPageCrawler {
     private final List<Strings> webPages;
 
-    MultiPageCrawler() {
+    public MultiPageCrawler() {
         this.webPages = List.of(
                 Strings.PlanetFitnessWebURL,
                 Strings.GoodLifeFitnessWebURL,

@@ -1,4 +1,4 @@
-package WebCrawler;
+package WebCrawler.Fit4Less;
 
 import helpers.Strings;
 

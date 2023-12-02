@@ -1,5 +1,7 @@
-package WebCrawler;
+package WebCrawler.PlanetFitness;
 
+import WebCrawler.Crawler.Crawler;
+import WebCrawler.Crawler.CrawlerInterface;
 import WebCrawler.Model.FitnessDataModel;
 import WebCrawler.Model.MembershipDetailsModel;
 import helpers.Strings;
@@ -17,7 +19,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
 
-public class CrawlPlanetFitness extends Crawler implements CrawlerDelegate {
+public class CrawlPlanetFitness extends Crawler implements CrawlerInterface {
     public static void info(String message) {
         java.util.logging.Logger.getLogger(CrawlPlanetFitness.class.getName()).info(message);
     }
@@ -28,7 +30,7 @@ public class CrawlPlanetFitness extends Crawler implements CrawlerDelegate {
 
     private List<File> files;
 
-    CrawlPlanetFitness(Strings url) {
+    public CrawlPlanetFitness(Strings url) {
         super(url);
         files = new ArrayList<>();
     }

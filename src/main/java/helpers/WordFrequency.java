@@ -1,7 +1,7 @@
 package helpers;
 
-import WebCrawler.Fit4LessCurrentPage;
-import WebCrawler.GoodLifeFitnessCurrentPage;
+import WebCrawler.Fit4Less.Fit4LessCurrentPage;
+import WebCrawler.GoodLifeFitness.GoodLifeFitnessCurrentPage;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -12,7 +12,7 @@ public class WordFrequency {
     private List<File> files;
     private final Map<String, Map<String, Integer>> allWordsFrequencies;
 
-    WordFrequency() {
+    public WordFrequency() {
         this.allWordsFrequencies = new TreeMap<>();
         initFiles();
     }

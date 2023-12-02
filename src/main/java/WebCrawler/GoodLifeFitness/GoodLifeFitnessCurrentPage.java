@@ -1,4 +1,4 @@
-package WebCrawler;
+package WebCrawler.GoodLifeFitness;
 
 import helpers.Strings;
 

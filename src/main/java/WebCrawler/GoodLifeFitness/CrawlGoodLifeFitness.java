@@ -1,5 +1,7 @@
-package WebCrawler;
+package WebCrawler.GoodLifeFitness;
 
+import WebCrawler.Crawler.Crawler;
+import WebCrawler.Crawler.CrawlerInterface;
 import WebCrawler.Model.FitnessDataModel;
 import WebCrawler.Model.MembershipDetailsModel;
 import helpers.Log;
@@ -18,7 +20,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class CrawlGoodLifeFitness extends Crawler implements CrawlerDelegate{
+public class CrawlGoodLifeFitness extends Crawler implements CrawlerInterface {
     public static void info(String message) {
         java.util.logging.Logger.getLogger(CrawlGoodLifeFitness.class.getName()).info(message);
     }
@@ -29,7 +31,7 @@ public class CrawlGoodLifeFitness extends Crawler implements CrawlerDelegate{
 
     GoodLifeFitnessCurrentPage goodLifeFitnessCurrentPage;
 
-    CrawlGoodLifeFitness(Strings url) {
+    public CrawlGoodLifeFitness(Strings url) {
         super(url);
     }
 

@@ -1,5 +1,7 @@
-package WebCrawler;
+package WebCrawler.Fit4Less;
 
+import WebCrawler.Crawler.Crawler;
+import WebCrawler.Crawler.CrawlerInterface;
 import WebCrawler.Model.FitnessDataModel;
 import WebCrawler.Model.MembershipDetailsModel;
 import helpers.Log;
@@ -17,7 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 
-public class CrawlFit4Less extends Crawler implements CrawlerDelegate {
+public class CrawlFit4Less extends Crawler implements CrawlerInterface {
     public static void info(String message) {
         java.util.logging.Logger.getLogger(CrawlFit4Less.class.getName()).info(message);
     }
@@ -27,7 +29,7 @@ public class CrawlFit4Less extends Crawler implements CrawlerDelegate {
     }
     Fit4LessCurrentPage fit4LessCurrentPage;
 
-    CrawlFit4Less(Strings url) {
+    public CrawlFit4Less(Strings url) {
         super(url);
     }
 

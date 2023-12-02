@@ -48,14 +48,18 @@ public class WordSearchCount {
         return search(parentNode.right, word);
     }
 
-    public static void main(String[] args) {
+    public static WordSearchCount getInstanceUsing(List<String> tokenizedWords) {
         WordSearchCount wordSearchCount = new WordSearchCount();
-        String text = "THis is the test string to test out word search count";
-        List<String> tokenizedWords = (new StringTokenizer(text)).getTokenizedWords();
         for (String tokenizedWord : tokenizedWords) {
             wordSearchCount.insert(tokenizedWord);
         }
+        return wordSearchCount;
+    }
 
+    public static void main(String[] args) {
+        String text = "THis is the test string to test out word search count";
+        List<String> tokenizedWords = (new StringTokenizer(text)).getTokenizedWords();
+        WordSearchCount wordSearchCount = WordSearchCount.getInstanceUsing(tokenizedWords);
         System.out.println("Count of 'this': " + wordSearchCount.getCountFor("this"));
         System.out.println("Count of 'this': " + wordSearchCount.getCountFor("this"));
     }

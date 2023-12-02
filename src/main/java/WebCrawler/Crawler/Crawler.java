@@ -1,4 +1,4 @@
-package WebCrawler;
+package WebCrawler.Crawler;
 
 import WebCrawler.Model.FitnessDataModel;
 import helpers.Strings;
@@ -32,7 +32,7 @@ public class Crawler {
     protected Pattern pricePattern;
     protected JavascriptExecutor javascriptExecutor;
 
-    Crawler(Strings url) {
+    protected Crawler(Strings url) {
         this.url = url.value;
         this.fitnessDataModel = new FitnessDataModel();
         this.isDirectoryEmpty = true;
@@ -103,7 +103,7 @@ public class Crawler {
         }
     }
 
-    String getTextFrom(String xpath) {
+    protected String getTextFrom(String xpath) {
         return Xsoup.compile(xpath).evaluate(document).getElements().text();
     }
 }
