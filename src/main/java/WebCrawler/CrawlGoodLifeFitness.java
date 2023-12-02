@@ -18,15 +18,6 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-enum GoodLifeFitnessCurrentPage {
-    MembershipPage,
-    LocationsPage;
-
-    String getPath() {
-        return Strings.GoodLifeFitnessParsedHTMLDirectory.value + this.name() + Strings.HTMLExtension.value;
-    }
-}
-
 public class CrawlGoodLifeFitness extends Crawler implements CrawlerDelegate{
     public static void info(String message) {
         java.util.logging.Logger.getLogger(CrawlGoodLifeFitness.class.getName()).info(message);

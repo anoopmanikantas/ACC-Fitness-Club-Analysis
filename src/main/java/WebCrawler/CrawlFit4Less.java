@@ -17,16 +17,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 
-enum Fit4LessCurrentPage {
-    HomeMembershipPage,
-    LocationsPage;
-
-    String getPath() {
-        return Strings.Fit4LessParsedHTMLDirectory.value + this.name() + Strings.HTMLExtension.value;
-    }
-
-}
-
 public class CrawlFit4Less extends Crawler implements CrawlerDelegate {
     public static void info(String message) {
         java.util.logging.Logger.getLogger(CrawlFit4Less.class.getName()).info(message);

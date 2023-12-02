@@ -5,6 +5,7 @@ public enum Strings {
     Empty,
     ArgumentRemoteAllowOrigins("--remote-allow-origins=*"),
     SourceParsedHTMLDirectory("src/main/java/parsedHTML/"),
+    UTF8("UTF-8"),
     HTMLExtension(".html"),
     ForwardSlash("/"),
     ChildrenXpath(".//*"),

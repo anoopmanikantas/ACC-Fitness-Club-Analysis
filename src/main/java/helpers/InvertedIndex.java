@@ -39,7 +39,7 @@ public class InvertedIndex {
     }
 
     private void tokenizeStringAndInsertIntoInvertedIndex(String text, FitnessDataModel model) {
-        List<String> tokens = Arrays.stream(text.split(Strings.RegexSpaceAndNonWordCharacters.value)).toList();
+        List<String> tokens = (new StringTokenizer(text)).getTokenizedWords();
         for (String token : tokens) {
             if (!token.isBlank()) {
                 if (!invertedIndex.containsKey(token.strip())) {

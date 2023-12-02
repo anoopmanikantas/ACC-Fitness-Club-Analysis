@@ -20,17 +20,17 @@ import java.time.Duration;
 import java.util.regex.Pattern;
 
 public class Crawler {
-    Actions actions;
-    WebDriver driver;
-    WebDriverWait webDriverWait;
-    final String url;
-    String html;
-    Document document;
-    FitnessDataModel fitnessDataModel;
-    boolean isDirectoryEmpty;
-    int numberOfFiles;
-    Pattern pricePattern;
-    JavascriptExecutor javascriptExecutor;
+    protected Actions actions;
+    protected WebDriver driver;
+    protected WebDriverWait webDriverWait;
+    protected final String url;
+    protected String html;
+    protected Document document;
+    protected FitnessDataModel fitnessDataModel;
+    protected boolean isDirectoryEmpty;
+    protected int numberOfFiles;
+    protected Pattern pricePattern;
+    protected JavascriptExecutor javascriptExecutor;
 
     Crawler(Strings url) {
         this.url = url.value;
@@ -41,7 +41,7 @@ public class Crawler {
         this.javascriptExecutor = (JavascriptExecutor) this.driver;
     }
 
-    void createDirectory(Strings htmlFilePath) {
+    protected void createDirectory(Strings htmlFilePath) {
         isDirectoryEmpty = checkIfDirectoryIsEmpty(htmlFilePath); // TODO: Call checkIfDirectoryIsEmpty
         if (isDirectoryEmpty) {
             initDriver();
@@ -54,7 +54,7 @@ public class Crawler {
         }
     }
 
-    void initDriver() {
+    protected void initDriver() {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments(Strings.ArgumentRemoteAllowOrigins.value);
         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
@@ -68,7 +68,7 @@ public class Crawler {
         driver.manage().window().maximize();
     }
 
-    boolean checkIfDirectoryIsEmpty(Strings path) {
+    protected boolean checkIfDirectoryIsEmpty(Strings path) {
         File directory = new File(path.value);
         if (directory.exists()) {
             File[] files = directory.listFiles();
@@ -81,13 +81,13 @@ public class Crawler {
     }
 
     @SuppressWarnings("All")
-    void parseAndStoreHTMLFile(Strings directory) {
+    protected void parseAndStoreHTMLFile(Strings directory) {
         String fileName = this.document.title();
         fileName = fileName.replaceAll(Strings.RegexSpecialCharacters.value, Strings.Empty.value);
         storeFileUsing(directory, fileName);
     }
 
-    void parseAndStoreHTMLFile(Strings directory, String fileName) {
+    protected void parseAndStoreHTMLFile(Strings directory, String fileName) {
         storeFileUsing(directory, fileName);
     }
 

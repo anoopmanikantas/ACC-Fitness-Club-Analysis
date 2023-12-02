@@ -26,8 +26,11 @@ public class CrawlPlanetFitness extends Crawler implements CrawlerDelegate {
         java.util.logging.Logger.getLogger(CrawlPlanetFitness.class.getName()).severe(error);
     }
 
+    private List<File> files;
+
     CrawlPlanetFitness(Strings url) {
         super(url);
+        files = new ArrayList<>();
     }
 
     private void crawlPage() {
@@ -110,6 +113,7 @@ public class CrawlPlanetFitness extends Crawler implements CrawlerDelegate {
     private void traverseThroughAllTheFilesLocally() throws IOException {
         File directory = new File(Strings.PlanetFitnessParsedHTMLDirectory.value);
         List<File> files = List.of(Objects.requireNonNull(directory.listFiles()));
+        this.files = files;
         for (File file : files) {
             document = Jsoup.parse(file);
             fetchDataFromLocation();
@@ -167,6 +171,10 @@ public class CrawlPlanetFitness extends Crawler implements CrawlerDelegate {
             membershipDetailsModels.add(membershipDetailsModel);
         }
         return membershipDetailsModels;
+    }
+
+    public List<File> getFiles() {
+        return this.files;
     }
 
     @Override
