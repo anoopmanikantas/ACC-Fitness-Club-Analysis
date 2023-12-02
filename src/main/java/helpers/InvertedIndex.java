@@ -7,7 +7,7 @@ import java.util.*;
 
 public class InvertedIndex {
     private final Map<String, List<FitnessDataModel>> invertedIndex;
-    private List<FitnessDataModel> fitnessDataModels;
+    private final List<FitnessDataModel> fitnessDataModels;
     private List<String> tokenizedWords;
 
     private void clearData() {

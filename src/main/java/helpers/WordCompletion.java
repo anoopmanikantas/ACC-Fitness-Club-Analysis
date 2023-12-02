@@ -14,7 +14,7 @@ class TrieNode {
 }
 
 public class WordCompletion {
-    private TrieNode parentNode;
+    private final TrieNode parentNode;
 
     public WordCompletion() {
         parentNode = new TrieNode();
