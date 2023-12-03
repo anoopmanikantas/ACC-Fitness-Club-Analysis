@@ -134,19 +134,55 @@ public class Main extends MainExtension{
         invertedIndexMap.forEach((key, value) -> {
             Matcher matcher = pattern.matcher(key);
             if (matcher.find()) {
-                BigDecimal feeFromInvertedIndex;
                 try {
-                    feeFromInvertedIndex = extractValue(matcher.group());
+                    for (FitnessDataModel fitnessDataModel : value) {
+                        FitnessDataModel resultModel = new FitnessDataModel();
+                        List<MembershipDetailsModel> resultMembershipDetailsModel = new ArrayList<>();
+                        for (MembershipDetailsModel membershipDetail : fitnessDataModel.membershipDetails) {
+                            switch (subMenuForSearchByMembershipFee) {
+                                case BiWeekly -> {
+                                    if (!membershipDetail.biWeeklyFee.isBlank()
+                                            && extractValue(membershipDetail.biWeeklyFee).compareTo(userInputFee) < 0
+                                            && extractValue(membershipDetail.biWeeklyFee).compareTo(extractValue(Strings.Zero.value)) != 0) {
+                                        resultMembershipDetailsModel.add(membershipDetail);
+                                        resultModel.membershipDetails.addAll(resultMembershipDetailsModel);
+                                        resultModel.gymName = fitnessDataModel.gymName;
+                                        resultModel.gymURL = fitnessDataModel.gymURL;
+                                        resultModel.locations = fitnessDataModel.locations;
+                                        resultFitnessDataModel.add(resultModel);
+                                    }
+                                }
+                                case Monthly -> {
+                                    if (!membershipDetail.monthlyFee.isBlank()
+                                            && extractValue(membershipDetail.monthlyFee).compareTo(userInputFee) < 0
+                                            && extractValue(membershipDetail.monthlyFee).compareTo(extractValue(Strings.Zero.value)) != 0) {
+                                        resultMembershipDetailsModel.add(membershipDetail);
+                                        resultModel.membershipDetails.addAll(resultMembershipDetailsModel);
+                                        resultModel.gymName = fitnessDataModel.gymName;
+                                        resultModel.gymURL = fitnessDataModel.gymURL;
+                                        resultModel.locations = fitnessDataModel.locations;
+                                        resultFitnessDataModel.add(resultModel);
+                                    }
+                                }
+                                case Annual -> {
+                                    if (!membershipDetail.annualFee.isBlank()
+                                            && extractValue(membershipDetail.annualFee).compareTo(userInputFee) < 0
+                                            && extractValue(membershipDetail.annualFee).compareTo(extractValue(Strings.Zero.value)) != 0) {
+                                        resultMembershipDetailsModel.add(membershipDetail);
+                                        resultModel.membershipDetails.addAll(resultMembershipDetailsModel);
+                                        resultModel.gymName = fitnessDataModel.gymName;
+                                        resultModel.gymURL = fitnessDataModel.gymURL;
+                                        resultModel.locations = fitnessDataModel.locations;
+                                        resultFitnessDataModel.add(resultModel);
+                                    }
+                                }
+                            }
+                        }
+                    }
                 } catch (ACCException e) {
                     throw new RuntimeException(e);
                 }
-                for (FitnessDataModel fitnessDataModel : value) {
-                    for (MembershipDetailsModel membershipDetail : fitnessDataModel.membershipDetails) {
-                        if ((!membershipDetail.biWeeklyFee.isBlank() || !membershipDetail.annualFee.isBlank() || !membershipDetail.monthlyFee.isBlank()) && feeFromInvertedIndex.compareTo(userInputFee) < 0) {
-                            resultFitnessDataModel.add(fitnessDataModel);
-                        }
-                    }
-                }
+
             }
         });
         return resultFitnessDataModel;
@@ -213,7 +249,12 @@ public class Main extends MainExtension{
                 List<String> results = new ArrayList<>();
                 System.out.println();
                 List<FitnessDataModel> suggestedModels = invertedIndexMap.get(suggestedWord);
-                if (suggestedModels.isEmpty()) display(Strings.NoGymFound);
+                try {
+                    if (suggestedModels.isEmpty()) display(Strings.NoGymFound);
+                } catch (Exception ignored) {
+                    throw new ACCException(E.GymNotFound);
+                }
+
                 for (FitnessDataModel fitnessDataModel : suggestedModels) {
                          String formattedString = String.format(Strings.AmenitiesDetails.value, fitnessDataModel.gymName, fitnessDataModel.gymURL);
                          if (!results.contains(formattedString)) {
@@ -229,7 +270,6 @@ public class Main extends MainExtension{
     }
 
     private void displayResultsForGymName() {
-
         List<String> gyms = invertedIndex.getGymNames();
         String userInput;
         while (true) {

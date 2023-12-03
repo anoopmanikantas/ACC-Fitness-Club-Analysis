@@ -33,6 +33,7 @@ public enum Strings {
     SearchDetailsMenuByMembershipAnnually("|\t3. Annual fee\t\t\t\t\t\t\t\t\t|"),
     DidYouMeanString(">\tDid you mean:\t\t"),
     WordCompletionString("Word Completion"),
+    Zero("$0"),
     Type,
     TypeToGetWordCompletion(">\tElse Type 3 to get word completion "),
 
