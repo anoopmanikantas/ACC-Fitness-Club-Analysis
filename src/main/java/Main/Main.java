@@ -17,6 +17,46 @@ public class Main extends MainExtension{
         super();
     }
 
+    @SuppressWarnings("All")
+    public static void main(String[] args) {
+        Main main = new Main();
+        main.display(Strings.WelcomeString);
+        while (true) {
+            main.displayMainMenu();
+            main.getInputFor(Menus.MainMenu);
+            main.getInputFor(Menus.SubMenuForSearchByDetails);
+            switch (main.subMenuForSearchByDetails) {
+                case SearchByGymDetails -> main.getInputFor(Menus.SubMenuForSearchByGymDetails);
+                case SearchByMembershipFee -> main.getInputFor(Menus.SubMenuForSearchByMembershipFee);
+            }
+        }
+    }
+
+    private void getInputFor(Menus menu) {
+        int option;
+        while (true) {
+            System.out.print(Strings.MenuEnterAnOption.value);
+            try {
+                option = getOptionInput();
+                if (isValidMenuOptionFor(option, menu)) break;
+            } catch (ACCException exception) {
+                handle(exception);
+            }
+        }
+        handleMenuEntryFor(menu);
+    }
+
+    private int getOptionInput() throws ACCException {
+        int option;
+        try {
+            Scanner scanner = new Scanner(System.in);
+            option = scanner.nextInt();
+        } catch (Exception ignored) {
+            throw new ACCException(E.InputNotInteger);
+        }
+        return option;
+    }
+
     private boolean isValidMenuOptionFor(int option, Menus menus) throws ACCException{
         if (option == 0) {
             display(Strings.GoodByeMessage);
@@ -36,53 +76,11 @@ public class Main extends MainExtension{
         }
     }
 
-    private int getOptionInput() throws ACCException {
-        int option;
-        try {
-            Scanner scanner = new Scanner(System.in);
-            option = scanner.nextInt();
-        } catch (Exception ignored) {
-            throw new ACCException(E.InputNotInteger);
-        }
-        return option;
-    }
-
-    private void getInputFor(Menus menu) {
-        int option;
-        while (true) {
-            System.out.print(Strings.MenuEnterAnOption.value);
-            try {
-                option = getOptionInput();
-                if (isValidMenuOptionFor(option, menu)) break;
-            } catch (ACCException exception) {
-                handle(exception);
-            }
-        }
-        handleMenuEntryFor(menu);
-    }
-
-    @SuppressWarnings("All")
-    public static void main(String[] args) {
-        Main main = new Main();
-        main.display(Strings.WelcomeString);
-        while (true) {
-            main.displayMainMenu();
-            main.getInputFor(Menus.MainMenu);
-            main.getInputFor(Menus.SubMenuForSearchByDetails);
-            switch (main.subMenuForSearchByDetails) {
-                case SearchByGymDetails -> main.getInputFor(Menus.SubMenuForSearchByGymDetails);
-                case SearchByMembershipFee -> main.getInputFor(Menus.SubMenuForSearchByMembershipFee);
-            }
-        }
-    }
-
     private void handleMenuEntryFor(Menus menu) {
         System.out.println();
         switch (menu) {
-            case MainMenu-> {
-                if (Objects.requireNonNull(mainMenu) == MainMenu.SearchByDetails) {
-                    displaySubMenuForSearchDetails();
-                }
+            case MainMenu -> {
+                if (Objects.requireNonNull(mainMenu) == MainMenu.SearchByDetails) displaySubMenuForSearchDetails();
             }
             case SubMenuForSearchByDetails -> {
                 switch (subMenuForSearchByDetails) {
@@ -95,7 +93,6 @@ public class Main extends MainExtension{
                     case GymName -> displayResultsForGymName();
                     case Location -> displayResultsForLocations();
                     case Amenities -> displayResultsForAmenities();
-
                 }
             }
             case SubMenuForSearchByMembershipFee -> displayResultsForMembershipFeeLessThan();
@@ -145,19 +142,8 @@ public class Main extends MainExtension{
                 }
                 for (FitnessDataModel fitnessDataModel : value) {
                     for (MembershipDetailsModel membershipDetail : fitnessDataModel.membershipDetails) {
-                        switch (subMenuForSearchByMembershipFee) {
-                            case BiWeekly -> {
-                                if (!membershipDetail.biWeeklyFee.isBlank() && feeFromInvertedIndex.compareTo(userInputFee) < 0 )
-                                    resultFitnessDataModel.add(fitnessDataModel);
-                            }
-                            case Annual -> {
-                                if (!membershipDetail.annualFee.isBlank() && feeFromInvertedIndex.compareTo(userInputFee) < 0 )
-                                    resultFitnessDataModel.add(fitnessDataModel);
-                            }
-                            case Monthly -> {
-                                if (!membershipDetail.monthlyFee.isBlank() && feeFromInvertedIndex.compareTo(userInputFee) < 0 )
-                                    resultFitnessDataModel.add(fitnessDataModel);
-                            }
+                        if ((!membershipDetail.biWeeklyFee.isBlank() || !membershipDetail.annualFee.isBlank() || !membershipDetail.monthlyFee.isBlank()) && feeFromInvertedIndex.compareTo(userInputFee) < 0) {
+                            resultFitnessDataModel.add(fitnessDataModel);
                         }
                     }
                 }
@@ -172,7 +158,6 @@ public class Main extends MainExtension{
         if (matcher.find()) {
             try {
                 return new BigDecimal(matcher.group(1).replace(Strings.DollarSymbol.value, Strings.Empty.value).trim());
-
             } catch (Exception ignored) {
                 return BigDecimal.valueOf(0);
             }

@@ -56,4 +56,10 @@ public class SpellCheck {
     private Integer min(Integer value1, Integer value2, Integer value3) {
         return Math.min(Math.min(value1, value2), value3);
     }
+
+    public static void main(String[] args) {
+        SpellCheck spellCheck = new SpellCheck();
+        int distance = spellCheck.calculateAndFetchEditDistanceFor("Prithvi", "Pruthiv");
+        System.out.println("Edit distance for the given words are: " + distance);
+    }
 }

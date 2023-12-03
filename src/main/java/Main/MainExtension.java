@@ -43,9 +43,9 @@ public class MainExtension{
 
     String suggestWords(String userInput, List<String> list, boolean isAmenities) {
         int min = Integer.MAX_VALUE;
-        String minWord = "";
+        String minWord = Strings.Empty.value;
         int secondMin = Integer.MAX_VALUE;
-        String secondMinWord = "";
+        String secondMinWord = Strings.Empty.value;
         for (String element : list) {
             int editDistance = spellCheck.calculateAndFetchEditDistanceFor(userInput, element);
             if (editDistance < min) {
