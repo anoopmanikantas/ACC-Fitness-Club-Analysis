@@ -101,6 +101,7 @@ public class CrawlPlanetFitness extends Crawler implements CrawlerInterface {
         List<MembershipDetailsModel> membershipDetailsModels = getMembershipDetails();
         getAmenitiesDetails(membershipDetailsModels);
         fitnessDataModel.membershipDetails.addAll(membershipDetailsModels);
+        fitnessDataModel.gymURL = url;
     }
 
     private void getAmenitiesDetails(List<MembershipDetailsModel> membershipDetailsModels) {

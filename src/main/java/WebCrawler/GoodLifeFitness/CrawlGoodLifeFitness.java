@@ -85,7 +85,6 @@ public class CrawlGoodLifeFitness extends Crawler implements CrawlerInterface {
                 }
             }
         }
-        System.out.println(prices);
         return prices;
     }
 
@@ -138,6 +137,7 @@ public class CrawlGoodLifeFitness extends Crawler implements CrawlerInterface {
                 }
             }
             fitnessDataModel.gymName = Strings.GoodLifeFitness.name();
+            fitnessDataModel.gymURL = url;
         } catch (Exception e) {
             Log.error(e.getMessage());
         }

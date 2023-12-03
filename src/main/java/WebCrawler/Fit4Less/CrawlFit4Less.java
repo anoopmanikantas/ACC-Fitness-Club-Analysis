@@ -81,6 +81,7 @@ public class CrawlFit4Less extends Crawler implements CrawlerInterface {
                 }
             }
             fitnessDataModel.gymName = Strings.Fit4Less.name();
+            fitnessDataModel.gymURL = url;
         } catch (Exception e) {
             Log.error(e.getMessage());
         }

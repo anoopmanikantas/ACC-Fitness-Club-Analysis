@@ -1,5 +1,7 @@
 package WebCrawler.Model;
 
+import helpers.Strings;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,13 +15,15 @@ public class MembershipDetailsModel {
 
     @Override
     public String toString() {
-        return "MembershipDetailsModel{" +
-                "\n\tmembershipTier='" + membershipTier + '\'' +
-                "\n\tamenities=" + amenities +
-                "\n\tmonthlyFee='" + monthlyFee + '\'' +
-                "\n\tannualFee='" + annualFee + '\'' +
-                "\n\tadditionalFeeInfo='" + additionalFeeInfo + '\'' +
-                "\n\tbiWeeklyFee='" + biWeeklyFee + '\'' +
-                '}';
+        StringBuilder amenities = new StringBuilder();
+        for (String amenity : this.amenities)
+            amenities.append("\t\t- ").append(amenity).append(Strings.NewLine.value);
+        return "\n\tMembershipDetails" +
+                "\n\t\tmembershipTier= '" + membershipTier + '\'' +
+                "\n\t\tamenities=\n" + amenities +
+                "\n\t\tmonthlyFee= '" + monthlyFee + '\'' +
+                "\n\t\tannualFee= '" + annualFee + '\'' +
+                "\n\t\tadditionalFeeInfo= '" + additionalFeeInfo + '\'' +
+                "\n\t\tbiWeeklyFee= '" + biWeeklyFee + '\'';
     }
 }

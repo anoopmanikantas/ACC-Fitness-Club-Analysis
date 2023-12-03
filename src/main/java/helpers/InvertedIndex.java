@@ -10,9 +10,16 @@ public class InvertedIndex {
     private final List<FitnessDataModel> fitnessDataModels;
     private List<String> tokenizedWords;
 
+    private List<String> gymNames;
+    private List<String> locations;
+    private List<String> amenities;
+
     private void clearData() {
         invertedIndex.clear();
         tokenizedWords = new ArrayList<>();
+        gymNames = new ArrayList<>();
+        locations = new ArrayList<>();
+        amenities = new ArrayList<>();
     }
 
     public InvertedIndex(List<FitnessDataModel> fitnessDataModels) {
@@ -24,30 +31,45 @@ public class InvertedIndex {
     private void convertModelsToInvertedIndex() {
         clearData();
         for (FitnessDataModel model : fitnessDataModels) {
-            tokenizeStringAndInsertIntoInvertedIndex(model.gymName, model);
+            gymNames.addAll(tokenizeStringAndInsertIntoInvertedIndex(model.gymName, model));
             for (String location : model.locations) {
-                tokenizeStringAndInsertIntoInvertedIndex(location, model);
+                locations.addAll(tokenizeStringAndInsertIntoInvertedIndex(location, model));
             }
             for (String detail : model.additionalDetails) {
                 tokenizeStringAndInsertIntoInvertedIndex(detail, model);
             }
             for (MembershipDetailsModel membership : model.membershipDetails) {
                 tokenizeStringAndInsertIntoInvertedIndex(membership.membershipTier, model);
-                tokenizeStringAndInsertIntoInvertedIndex(membership.monthlyFee, model);
-                tokenizeStringAndInsertIntoInvertedIndex(membership.annualFee, model);
+                insertIntoInvertedIndexWithoutTokenizing(membership.monthlyFee, model);
+                insertIntoInvertedIndexWithoutTokenizing(membership.annualFee, model);
                 tokenizeStringAndInsertIntoInvertedIndex(membership.additionalFeeInfo, model);
-                tokenizeStringAndInsertIntoInvertedIndex(membership.biWeeklyFee, model);
+                insertIntoInvertedIndexWithoutTokenizing(membership.biWeeklyFee, model);
+                List<String> amenities = new ArrayList<>();
                 for (String amenity : membership.amenities) {
-                    tokenizeStringAndInsertIntoInvertedIndex(amenity, model);
+                    amenities.addAll(tokenizeStringAndInsertIntoInvertedIndex(amenity, model));
                 }
+                this.amenities.addAll(amenities);
             }
         }
     }
 
-    private void tokenizeStringAndInsertIntoInvertedIndex(String text, FitnessDataModel model) {
+    private void insertIntoInvertedIndexWithoutTokenizing(String text, FitnessDataModel model) {
+        if (!text.isBlank()) {
+            String token = text.strip().toLowerCase();
+            if (!invertedIndex.containsKey(token)) {
+                invertedIndex.put(token, new ArrayList<>());
+                tokenizedWords.add(token);
+            }
+            invertedIndex.get(token).add(model);
+        }
+    }
+
+    private List<String> tokenizeStringAndInsertIntoInvertedIndex(String text, FitnessDataModel model) {
+        List<String> uniqueTokens = new ArrayList<>();
         List<String> tokens = (new StringTokenizer(text)).getTokenizedWords();
         for (String token : tokens) {
             if (!token.isBlank()) {
+                if (!uniqueTokens.contains(token)) uniqueTokens.add(token);
                 if (!invertedIndex.containsKey(token.strip())) {
                     invertedIndex.put(token.strip().toLowerCase(), new ArrayList<>());
                     tokenizedWords.add(token.strip().toLowerCase());
@@ -55,6 +77,19 @@ public class InvertedIndex {
                 invertedIndex.get(token.strip().toLowerCase()).add(model);
             }
         }
+        return uniqueTokens;
+    }
+
+    public List<String> getGymNames() {
+        return gymNames;
+    }
+
+    public List<String> getLocations() {
+        return locations;
+    }
+
+    public List<String> getAmenities() {
+        return amenities;
     }
 
     public Map<String, List<FitnessDataModel>> getInvertedIndex() {

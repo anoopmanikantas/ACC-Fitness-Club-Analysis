@@ -2,14 +2,51 @@ package helpers;
 
 public enum Strings {
     //- General Strings
+    Output("|==================Output====================|\nBased on your input below are the suggested clubs"),
+    WordSearchFrequencyFor("Number of times the word '%s' has been searched: %d"),
+    WordFrequency("The word is located in '%s' for %d times\n"),
+    WelcomeString("\t\t\t\tWelcome to Fitness Club!!"),
+    NoGymFound("No Gym Found For Your Query!!."),
+    ProceedWithManuallyEnteredString("> Else Type 0 to proceed with manually entered value."),
+    GoodByeMessage("GoodBye!!!"),
+    MenuSeparator("|===================================================|"),
+    MenuString("|\t\t\t\t\t\tMenu\t\t\t\t\t\t|"),
+    MenuSearchDetails("|\t1. Search Details\t\t\t\t\t\t\t\t|"),
+    MenuExit("|\t0. Exit\t\t\t\t\t\t\t\t\t\t\t|"),
+    MenuEnterAnOption(">\tEnter an option: "),
+    SearchDetailsMenu("|\t\t\t\t\tSearch Details\t\t\t\t\t|"),
+    SearchDetailsMenuByDetails("|\t1. Search By Gym Name, Amenities Or Location\t|"),
+    SearchByDetailsMenuByDetailsTitle("|\t\tSearch By Gym Name, Amenities Or Location\t|"),
+    SearchByDetailsMenuByDetailsGym("|\t1. Gym Name\t\t\t\t\t\t\t\t\t\t|"),
+    SearchByDetailsMenuByDetailsAmenities("|\t2. Amenities\t\t\t\t\t\t\t\t\t|"),
+    SearchByDetailsMenuByDetailsLocation("|\t3. Location\t\t\t\t\t\t\t\t\t\t|"),
+    EnterFee(">\tEnter the maximum fee to be queried: "),
+    EnterGymName(">\tEnter Gym Name (Enter a word, for example: planetfitness): "),
+    EnterLocation(">\tEnter Location (Enter a word):"),
+    EnterAmenity(">\tEnter Amenity (Enter a word, for example: spa, tanning, pool): "),
+    AmenitiesDetails("Entered Amenity is found in gym '%s'\nVisit %s for more details.\n"),
+    LocationDetails("Gym found for entered location is '%s'\nVisit %s for more details\n"),
+    SearchDetailsMenuByMembership("|\t2. Search By Membership Fee\t\t\t\t\t\t|"),
+    SearchDetailsMenuByMembershipTitle("|\t\t\t\tSearch By Membership Fee\t\t\t|"),
+    SearchDetailsMenuByMembershipBiWeekly("|\t1. Bi-Weekly fee\t\t\t\t\t\t\t\t|"),
+    SearchDetailsMenuByMembershipMonthly("|\t2. Monthly fee\t\t\t\t\t\t\t\t\t|"),
+    SearchDetailsMenuByMembershipAnnually("|\t3. Annual fee\t\t\t\t\t\t\t\t\t|"),
+    DidYouMeanString(">\tDid you mean:\t\t"),
+    WordCompletionString("Word Completion"),
+    Type,
+    TypeToGetWordCompletion(">\tElse Type 3 to get word completion "),
+
     Empty,
     ArgumentRemoteAllowOrigins("--remote-allow-origins=*"),
     SourceParsedHTMLDirectory("src/main/java/parsedHTML/"),
     UTF8("UTF-8"),
     HTMLExtension(".html"),
     ForwardSlash("/"),
+    NewLine("\n"),
     ChildrenXpath(".//*"),
     ClosingBox("]"),
+    Price("$%s"),
+    DollarSymbol("$"),
     Separator(", "),
     Windsor,
     Monthly,
@@ -18,8 +55,10 @@ public enum Strings {
     Yearly,
 
     //- Regex
+    RegexSpace("\\s"),
     RegexSpecialCharacters("[^a-zA-Z0-9]"),
     RegexPrice("\\$\\s?\\d{1,3}(\\.\\d{1,3})?"),
+    RegexPriceExtraction("(\\$\\s?\\d{1,3}(\\.\\d{1,3})?)"),
     RegexPhoneNumber("\\(\\d{3}\\) \\d{3}-\\d{4}"),
     RegexSpaceAndNonWordCharacters("\\s+|\\W+"),
 
@@ -83,6 +122,10 @@ public enum Strings {
 
     public static String getFormattedXpath(Strings string1, int index, Strings strings2) {
         return String.format("%s%d%s", string1.value, index, strings2.value);
+    }
+
+    public static String getString(Strings strings1, String string, Strings strings2, int index) {
+        return strings1.value + string + "?" + "\t" + strings2 + " " + index;
     }
 
     public String getValueUsing(String string, Strings strings) {
