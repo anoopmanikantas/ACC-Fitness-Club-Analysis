@@ -136,56 +136,53 @@ public class Main extends MainExtension{
             if (matcher.find()) {
                 try {
                     for (FitnessDataModel fitnessDataModel : value) {
-                        FitnessDataModel resultModel = new FitnessDataModel();
-                        List<MembershipDetailsModel> resultMembershipDetailsModel = new ArrayList<>();
-                        for (MembershipDetailsModel membershipDetail : fitnessDataModel.membershipDetails) {
-                            switch (subMenuForSearchByMembershipFee) {
-                                case BiWeekly -> {
-                                    if (!membershipDetail.biWeeklyFee.isBlank()
-                                            && extractValue(membershipDetail.biWeeklyFee).compareTo(userInputFee) < 0
-                                            && extractValue(membershipDetail.biWeeklyFee).compareTo(extractValue(Strings.Zero.value)) != 0) {
-                                        resultMembershipDetailsModel.add(membershipDetail);
-                                        resultModel.membershipDetails.addAll(resultMembershipDetailsModel);
-                                        resultModel.gymName = fitnessDataModel.gymName;
-                                        resultModel.gymURL = fitnessDataModel.gymURL;
-                                        resultModel.locations = fitnessDataModel.locations;
-                                        resultFitnessDataModel.add(resultModel);
-                                    }
-                                }
-                                case Monthly -> {
-                                    if (!membershipDetail.monthlyFee.isBlank()
-                                            && extractValue(membershipDetail.monthlyFee).compareTo(userInputFee) < 0
-                                            && extractValue(membershipDetail.monthlyFee).compareTo(extractValue(Strings.Zero.value)) != 0) {
-                                        resultMembershipDetailsModel.add(membershipDetail);
-                                        resultModel.membershipDetails.addAll(resultMembershipDetailsModel);
-                                        resultModel.gymName = fitnessDataModel.gymName;
-                                        resultModel.gymURL = fitnessDataModel.gymURL;
-                                        resultModel.locations = fitnessDataModel.locations;
-                                        resultFitnessDataModel.add(resultModel);
-                                    }
-                                }
-                                case Annual -> {
-                                    if (!membershipDetail.annualFee.isBlank()
-                                            && extractValue(membershipDetail.annualFee).compareTo(userInputFee) < 0
-                                            && extractValue(membershipDetail.annualFee).compareTo(extractValue(Strings.Zero.value)) != 0) {
-                                        resultMembershipDetailsModel.add(membershipDetail);
-                                        resultModel.membershipDetails.addAll(resultMembershipDetailsModel);
-                                        resultModel.gymName = fitnessDataModel.gymName;
-                                        resultModel.gymURL = fitnessDataModel.gymURL;
-                                        resultModel.locations = fitnessDataModel.locations;
-                                        resultFitnessDataModel.add(resultModel);
-                                    }
-                                }
-                            }
-                        }
+                        findFeeUsing(fitnessDataModel, userInputFee, resultFitnessDataModel);
                     }
                 } catch (ACCException e) {
                     throw new RuntimeException(e);
                 }
-
             }
         });
         return resultFitnessDataModel;
+    }
+
+    private void findFeeUsing(FitnessDataModel fitnessDataModel, BigDecimal userInputFee, List<FitnessDataModel> resultFitnessDataModel) throws ACCException {
+        FitnessDataModel resultModel = new FitnessDataModel();
+        List<MembershipDetailsModel> resultMembershipDetailsModel = new ArrayList<>();
+        for (MembershipDetailsModel membershipDetail : fitnessDataModel.membershipDetails) {
+            switch (subMenuForSearchByMembershipFee) {
+                case BiWeekly -> {
+                    if (!membershipDetail.biWeeklyFee.isBlank()
+                            && extractValue(membershipDetail.biWeeklyFee).compareTo(userInputFee) < 0
+                            && extractValue(membershipDetail.biWeeklyFee).compareTo(extractValue(Strings.Zero.value)) != 0) {
+                        addToResultFitnessModel(fitnessDataModel, membershipDetail, resultMembershipDetailsModel, resultModel, resultFitnessDataModel);
+                    }
+                }
+                case Monthly -> {
+                    if (!membershipDetail.monthlyFee.isBlank()
+                            && extractValue(membershipDetail.monthlyFee).compareTo(userInputFee) < 0
+                            && extractValue(membershipDetail.monthlyFee).compareTo(extractValue(Strings.Zero.value)) != 0) {
+                        addToResultFitnessModel(fitnessDataModel, membershipDetail, resultMembershipDetailsModel, resultModel, resultFitnessDataModel);
+                    }
+                }
+                case Annual -> {
+                    if (!membershipDetail.annualFee.isBlank()
+                            && extractValue(membershipDetail.annualFee).compareTo(userInputFee) < 0
+                            && extractValue(membershipDetail.annualFee).compareTo(extractValue(Strings.Zero.value)) != 0) {
+                        addToResultFitnessModel(fitnessDataModel, membershipDetail, resultMembershipDetailsModel, resultModel, resultFitnessDataModel);
+                    }
+                }
+            }
+        }
+    }
+
+    private static void addToResultFitnessModel(FitnessDataModel fitnessDataModel, MembershipDetailsModel membershipDetail, List<MembershipDetailsModel> resultMembershipDetailsModel, FitnessDataModel resultModel, List<FitnessDataModel> resultFitnessDataModel) {
+        resultMembershipDetailsModel.add(membershipDetail);
+        resultModel.membershipDetails.addAll(resultMembershipDetailsModel);
+        resultModel.gymName = fitnessDataModel.gymName;
+        resultModel.gymURL = fitnessDataModel.gymURL;
+        resultModel.locations = fitnessDataModel.locations;
+        resultFitnessDataModel.add(resultModel);
     }
 
     public static BigDecimal extractValue(String text) throws ACCException {
