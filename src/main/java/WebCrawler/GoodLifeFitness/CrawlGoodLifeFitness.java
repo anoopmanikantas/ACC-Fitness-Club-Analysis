@@ -4,7 +4,6 @@ import WebCrawler.Crawler.Crawler;
 import WebCrawler.Crawler.CrawlerInterface;
 import WebCrawler.Model.FitnessDataModel;
 import WebCrawler.Model.MembershipDetailsModel;
-import helpers.Log;
 import helpers.Strings;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -24,11 +23,6 @@ public class CrawlGoodLifeFitness extends Crawler implements CrawlerInterface {
     public static void info(String message) {
         java.util.logging.Logger.getLogger(CrawlGoodLifeFitness.class.getName()).info(message);
     }
-
-    public static void error(String error) {
-        java.util.logging.Logger.getLogger(CrawlGoodLifeFitness.class.getName()).severe(error);
-    }
-
     GoodLifeFitnessCurrentPage goodLifeFitnessCurrentPage;
 
     public CrawlGoodLifeFitness(Strings url) {
@@ -138,8 +132,8 @@ public class CrawlGoodLifeFitness extends Crawler implements CrawlerInterface {
             }
             fitnessDataModel.gymName = Strings.GoodLifeFitness.name();
             fitnessDataModel.gymURL = url;
-        } catch (Exception e) {
-            Log.error(e.getMessage());
+        } catch (Exception ignored) {
+
         }
     }
 

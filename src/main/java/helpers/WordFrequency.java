@@ -10,6 +10,8 @@ import java.util.*;
 
 public class WordFrequency {
     private List<File> files;
+
+    // <word, <filePath, count>>
     private final Map<String, Map<String, Integer>> allWordsFrequencies;
 
     public WordFrequency() {
@@ -20,9 +22,14 @@ public class WordFrequency {
     private void initFiles() {
         this.files = new ArrayList<>();
         File directory = new File(Strings.PlanetFitnessParsedHTMLDirectory.value);
-        files.addAll(Arrays.stream(Objects.requireNonNull(directory.listFiles())).toList());
-        List<Fit4LessCurrentPage> fit4LessCurrentPages = Arrays.stream(Fit4LessCurrentPage.values()).toList();
-        for (Fit4LessCurrentPage fit4LessCurrentPage : fit4LessCurrentPages) {
+        files.addAll(
+                Arrays.stream(
+                        Objects.requireNonNull(
+                                directory.listFiles()
+                        )
+                ).toList()
+        );
+        for (Fit4LessCurrentPage fit4LessCurrentPage : Fit4LessCurrentPage.values()) {
             files.add(new File(fit4LessCurrentPage.getPath()));
         }
         for (GoodLifeFitnessCurrentPage value : GoodLifeFitnessCurrentPage.values()) {

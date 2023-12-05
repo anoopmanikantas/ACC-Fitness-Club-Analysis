@@ -24,10 +24,6 @@ public class CrawlPlanetFitness extends Crawler implements CrawlerInterface {
         java.util.logging.Logger.getLogger(CrawlPlanetFitness.class.getName()).info(message);
     }
 
-    public static void error(String error) {
-        java.util.logging.Logger.getLogger(CrawlPlanetFitness.class.getName()).severe(error);
-    }
-
     private List<File> files;
 
     public CrawlPlanetFitness(Strings url) {
@@ -82,11 +78,10 @@ public class CrawlPlanetFitness extends Crawler implements CrawlerInterface {
                 driver.switchTo().window(new ArrayList<>(driver.getWindowHandles()).get(0));
             } catch (Exception ignored) {
                 driver.close();
-                driver.quit();
                 break;
-
             }
         }
+        driver.quit();
     }
 
     private void fetchDataFromLocation() {

@@ -106,11 +106,11 @@ public enum Strings {
     Fit4LessCityDropdownXpath("/html/body/form/div[7]/div[2]/div[1]/div/div[1]/div[2]"),
     Fit4LessCityWindsorXpath("/html/body/form/div[7]/div[2]/div[1]/div/div[1]/div[2]/ul/li[63]"),
     Fit4LessFindClubsButtonXpath("/html/body/form/div[7]/div[2]/div[1]/div/div[1]/div[3]/a"),
-    Fit4LessMembershipContainerXpath("/html/body/form/div[7]/div[2]/div/div/div/div["),
+    Fit4LessMembershipContainerXpath("/html/body/form/div[5]/div[2]/div/div/div/div["),
     Fit4LessMembershipPriceContainerXpath("]/div[1]/div[1]/div"),
     Fit4LessAmenitiesContainerXpath("]/div[1]/div[2]/ul/ul"),
     Fit4LessLocationsContainerXpath("/html/body/form/div[7]/div[1]/div[3]/div[2]/div[1]/div"),
-    Fit4LessLocationsWebPageXpath("/html/body/form/div[6]/header/div[2]/div/div[2]/ul/li[2]");
+    Fit4LessLocationsWebPageXpath("/html/body/form/div[4]/header/div[2]/div/div[2]/ul/li[2]/a");
 
     public final String value;
 

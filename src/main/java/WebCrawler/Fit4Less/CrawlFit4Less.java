@@ -4,7 +4,6 @@ import WebCrawler.Crawler.Crawler;
 import WebCrawler.Crawler.CrawlerInterface;
 import WebCrawler.Model.FitnessDataModel;
 import WebCrawler.Model.MembershipDetailsModel;
-import helpers.Log;
 import helpers.Strings;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -22,10 +21,6 @@ import java.util.regex.Matcher;
 public class CrawlFit4Less extends Crawler implements CrawlerInterface {
     public static void info(String message) {
         java.util.logging.Logger.getLogger(CrawlFit4Less.class.getName()).info(message);
-    }
-
-    public static void error(String error) {
-        java.util.logging.Logger.getLogger(CrawlFit4Less.class.getName()).severe(error);
     }
     Fit4LessCurrentPage fit4LessCurrentPage;
 
@@ -83,7 +78,7 @@ public class CrawlFit4Less extends Crawler implements CrawlerInterface {
             fitnessDataModel.gymName = Strings.Fit4Less.name();
             fitnessDataModel.gymURL = url;
         } catch (Exception e) {
-            Log.error(e.getMessage());
+            System.out.println(Arrays.stream(e.getStackTrace()).toList());
         }
     }
 

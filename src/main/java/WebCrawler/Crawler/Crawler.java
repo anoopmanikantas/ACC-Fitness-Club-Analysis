@@ -42,7 +42,7 @@ public class Crawler {
     }
 
     protected void createDirectory(Strings htmlFilePath) {
-        isDirectoryEmpty = checkIfDirectoryIsEmpty(htmlFilePath); // TODO: Call checkIfDirectoryIsEmpty
+        isDirectoryEmpty = checkIfDirectoryIsEmpty(htmlFilePath);
         if (isDirectoryEmpty) {
             initDriver();
             try {
